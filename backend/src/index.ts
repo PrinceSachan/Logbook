@@ -1,8 +1,9 @@
 import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import  Bindings  from 'hono/types'
-import { sign } from 'hono/jwt'
+import  Bindings, { Next }  from 'hono/types'
+import { sign, verify } from 'hono/jwt'
+import { Context } from 'hono/jsx'
 // import app from './routes/userRoute'
 
 type Bindings = {
@@ -11,6 +12,24 @@ type Bindings = {
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
+
+app.use('/api/v1/blog/*', async(c, next) => {
+  //get the header
+  const header = c.req.header("authorization") || "";
+  // Bearer token
+  const token = header.split(" ")[1]
+  //verify the header
+  const response = await verify(token, c.env.JWT_SECRET)
+  if(response.id){
+    //if the header is correct, we can proceed
+    await next()
+  } else {
+    //if not, return th user a 403 status code
+    c.status(403)
+    return c.json({ error: 'Unauthorized' })
+  }
+  console.log(header)
+})
 
 app.post('/api/v1/user/signup', async(c) => {
   const prisma = new PrismaClient({

@@ -1,10 +1,8 @@
 import { Hono } from 'hono'
-import { PrismaClient } from '@prisma/client/edge'
-import { withAccelerate } from '@prisma/extension-accelerate'
-import  Bindings, { Next }  from 'hono/types'
-import { sign, verify } from 'hono/jwt'
-import { Context } from 'hono/jsx'
-// import app from './routes/userRoute'
+import  Bindings from 'hono/types'
+import { userRoutes } from './routes/userRoute';
+import { blogPrivateRouter, blogPublicRouter } from './routes/blogRoute';
+import { cors } from 'hono/cors';
 
 type Bindings = {
   DATABASE_URL: string;
@@ -13,96 +11,9 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>()
 
-app.use('/api/v1/blog/*', async(c, next) => {
-  //get the header
-  const header = c.req.header("authorization") || "";
-  // Bearer token
-  const token = header.split(" ")[1]
-  //verify the header
-  const response = await verify(token, c.env.JWT_SECRET)
-  if(response.id){
-    //if the header is correct, we can proceed
-    await next()
-  } else {
-    //if not, return th user a 403 status code
-    c.status(403)
-    return c.json({ error: 'Unauthorized' })
-  }
-  console.log(header)
-})
-
-app.post('/api/v1/user/signup', async(c) => {
-  const prisma = new PrismaClient({
-      datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate())
-  const body = await c.req.json()
-  try {
-    const createUser = await prisma.user.create({
-      data: {
-        email: body.email,
-        name: body.name,
-        password: body.password,
-      }
-    })
-
-    if(!createUser){
-      c.status(403);
-      return c.json({ message: 'Error while signingup, wrong credentials'})
-    }
-
-    const token = await sign({ id: createUser.id }, c.env.JWT_SECRET)
-
-    return c.json({ token, createUser });
-  }
-  catch(err) {
-    c.status(403);
-    return c.json({ message: 'Error while signingup'})
-  }
-})
-
-app.post('/api/v1/user/signin', async(c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate())
-  const body = await c.req.json()
-  try{
-    const isUser = await prisma.user.findUnique({
-      where: {
-        email: body.email
-      }
-    })
-
-    if (!isUser) {
-      c.status(403);
-      return c.json({ message: 'Error while Logging in'})
-    }
-
-    const token = await sign( {id: isUser.id }, c.env.JWT_SECRET )
-
-    return c.json({ token, isUser })
-  }
-  catch (err) {
-    c.status(403);
-    return c.json({ message: 'Error while logging in'})
-  }
-})
-
-app.post('/api/v1/blog', (c) => {
-  return c.text('blog created');
-})
-
-app.put('/api/v1/blog', (c) => {
-  return c.text('blog updated');
-})
-
-app.get('/api/v1/blog/bulk', (c) => {
-  return c.text('blog created');
-})
-app.get('/api/v1/blog/:id', (c) => {
-  const id = c.req.param()
-  console.log(id)
-  return c.text('Specific blog got');
-})
-
+app.use('/*', cors())
+app.route('/api/v1/user', userRoutes);
+app.route('/api/v1/blog/private', blogPrivateRouter);
+app.route('/api/v1/blog/public', blogPublicRouter);
 
 export default app

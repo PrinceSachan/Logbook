@@ -23,7 +23,6 @@ export const createBlogInput = z.object({
 export const updateBlogInput = z.object({
     title: z.string().optional(),
     content: z.string().optional(),
-    id: z.number()
 })
 
 // type inference for different schemas

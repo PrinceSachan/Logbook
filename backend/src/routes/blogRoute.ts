@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { decode, verify } from "hono/jwt";
+import { verify } from "hono/jwt";
 
 type HonoTypes = {
     Bindings: {
@@ -13,6 +13,7 @@ type HonoTypes = {
     }
 }
 
+// private blog route for specific user
 export const blogPrivateRouter = new Hono<HonoTypes>();
 
 blogPrivateRouter.use('/*', async(c, next) => {
@@ -97,6 +98,7 @@ blogPrivateRouter.put('/:id', async(c) => {
     }
 })
 
+// public blog route for all users
 export const blogPublicRouter = new Hono<HonoTypes>()
 
 //Todo: add pagination
@@ -108,10 +110,11 @@ blogPublicRouter.get('/bulk', async(c) => {
     const body = await c.req.json()
     try {
         const bulkBlog = await prisma.post.findMany({
+            // take: 5,
             select: {
+                id: true,
                 title: true,
                 content: true,
-                id: true,
                 author: {
                     select: {
                         name: true

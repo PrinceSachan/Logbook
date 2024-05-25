@@ -3,7 +3,7 @@ import z from "zod";
 // signup schema for zod
 export const signupInput = z.object({
     email: z.string().email({ message: 'Email is required'}),
-    password: z.string().min(6, { message: 'Password is required'}),
+    password: z.string().min(6, { message: 'Password is required and should have 6 character'}),
     name: z.string().min(1, { message: "Name is required"})
 })
 

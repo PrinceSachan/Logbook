@@ -1,18 +1,9 @@
-import { Hono } from "hono";
+import { Hono, MiddlewareHandler } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from "hono/jwt";
 import {  createBlogInput, updateBlogInput } from "@princerudi/common";
-
-type HonoTypes = {
-    Bindings: {
-        DATABASE_URL: string;
-        JWT_SECRET: string; 
-    },
-    Variables: {
-        userId: string;
-    }
-}
+import { HonoTypes } from "../honotype";
 
 // blog router
 export const blogRouter = new Hono<HonoTypes>();
@@ -51,7 +42,7 @@ blogRouter.use(async(c, next) => {
     }
 })
 
-// route for create new blog
+// route for create blog
 blogRouter.post('/', async(c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL

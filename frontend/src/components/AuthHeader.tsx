@@ -1,15 +1,8 @@
-import React, { useState } from 'react'
+// imports
 import { Link } from 'react-router-dom'
-import { InputBox } from './InputBox'
-import { SignupInput } from '@princerudi/common'
-import { Button } from './Button'
 
 const AuthHeader = ({type}: {type: "signup" | "signin"}) => {
-    // const [postInputs, setPostInputs] = useState<SignupInput>({
-    //     name: "",
-    //     email: "",
-    //     password: ""
-    // })
+
   return (
     <div>
         <div className='text-3xl font-extrabold text-center'>

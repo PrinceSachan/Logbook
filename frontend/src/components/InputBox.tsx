@@ -7,6 +7,7 @@ interface InputType {
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
+// input component
 export const InputBox = ({type, label, placeHolderName, onChange}: InputType) => {
     return (
         <div>

@@ -1,15 +1,28 @@
+// imports
 import { useState } from 'react'
+
+// App imports
 import Quote from '../components/Quote'
 import { SigninInput } from '@princerudi/common'
 import AuthHeader from '../components/AuthHeader'
 import { InputBox } from '../components/InputBox'
 import { Button } from '../components/Button'
+import axios from 'axios'
+import { BACKEND_URL } from '../config'
 
+// signin component
 const Signin = () => {
   const [postInputs, setPostInputs] = useState<SigninInput>({
     email: "",
     password: ""
 })
+
+// signup request
+async function signinRequest() {
+  await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInputs)
+  .then(response => alert(`User have loggedin ${JSON.stringify(response.data)}`))
+  .catch(error => alert(`Error occured: ${JSON.stringify(error.response.data)}`))
+}
 return (
 <div>
     <div className='grid grid-cols-1 md:grid-cols-2'>
@@ -32,7 +45,7 @@ return (
                                 password: e.target.value
                             })
                         }} />
-                        <Button label={"Sign in"} type='submit' onClick={(e) => console.log('first')} />
+                        <Button label={"Sign in"} type='submit' onClick={signinRequest} />
                     </div>
                 </div>
             </div>

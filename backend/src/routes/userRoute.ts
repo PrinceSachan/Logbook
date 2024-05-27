@@ -32,7 +32,7 @@ userRoutes.post('/signup', async(c) => {
       if(isUser){
         c.status(411)
         return c.json({
-          error: 'Email is already taken, try to signup with different email.'
+          error: 'Email is already taken, try to signin or signup with different email.'
         })
       }
 

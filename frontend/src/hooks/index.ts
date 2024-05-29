@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../config"
 
-interface Blogtype {
+interface Blogstype {
     "id": number;
     "title": string
     "content":string
@@ -11,44 +11,60 @@ interface Blogtype {
     },
     "createdAt": string
 }
-export const useBlogs = () => {
+
+// fetch specific blog by given id if user logged in
+export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading]= useState(true)
-    const [blogs, setBlogs] = useState<Blogtype []>()
+    const [blog, setBlog] = useState<Blogstype>()
 
-    const bulkblog = async() => {
-        try{
-            axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
-                headers: {
-                    Authorization: localStorage.getItem("token")
-                }
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/blog/:${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " +  localStorage.getItem("token")
+            }
+        })
+            .then(response => {
+                setBlog(response.data.blog)
+                setLoading(false)
             })
-                .then(response => {
-                    console.log(blogs)
-                    setBlogs(response.data.bulkBlog)
-                    setLoading(false)
-                })
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-    // useEffect(() => {
-    //     axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
-    //         headers: {
-    //             Authorization: localStorage.getItem("token")
-    //         }
-    //     })
-    //         .then(response => {
-    //             console.log(blogs)
-    //             setBlogs(response.data.bulkBlog)
-    //             setLoading(false)
-    //         })
-    // }, [])
+            .catch((err) => {
+                console.log('Error while fetching blogs:', err)
+                setLoading(false)
+            })
+    }, [])
 
     return {
         loading,
-        blogs,
-        bulkblog,
+        blog
+    }
+}
+
+// fetch all blogs if user logged in
+export const useBlogs = () => {
+    const [loading, setLoading]= useState(true)
+    const [blogs, setBlogs] = useState<Blogstype []>()
+
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " +  localStorage.getItem("token")
+            }
+        })
+            .then(response => {
+                console.log(blogs)
+                setBlogs(response.data.bulkBlog)
+                setLoading(false)
+            })
+            .catch((err) => {
+                console.log('Error while fetching blogs:', err)
+                setLoading(false)
+            })
+    }, [])
+
+    return {
+        loading,
+        blogs
     }
 }

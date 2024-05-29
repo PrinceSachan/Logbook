@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
+    id: number;
     authorName: string;
     title: string;
     content: string;
@@ -8,38 +10,41 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({
+    id,
     authorName,
     title,
     content,
     publishedDate
 }: BlogCardProps) => {
   return (
-    <div className='p-4 border-b border-slate-200 pb-2'>
-        <div className='flex'>
-            <Avatar name={authorName} size='small' /> 
-            <div className='font-normal pl-2 text-sm flex justify-center flex-col'>
-                {authorName}
+    <Link to={`/blog/${id}`}>
+        <div className='p-4 border-b border-slate-200 pb-2 w-screen max-w-screen-md cursor-pointer'>
+            <div className='flex'>
+                <Avatar name={authorName} size='small' /> 
+                <div className='font-normal pl-2 text-sm flex justify-center flex-col'>
+                    {authorName}
+                </div>
+                <div className='flex justify-center flex-col pl-2 flex justify-center flex-col'>
+                    <Circle />
+                </div>
+                <div className='font-extralight pl-2 text-slate-500 text-sm flex justify-center flex-col'>
+                    {publishedDate}
+                </div>
             </div>
-            <div className='flex justify-center flex-col pl-2 flex justify-center flex-col'>
-                <Circle />
+            <div className='text-xl font-bold pt-2'>
+                {title}
             </div>
-            <div className='font-extralight pl-2 text-slate-500 text-sm flex justify-center flex-col'>
-                {publishedDate}
+            <div className='text-md font-light text-slate-700'>
+                {
+                    content.length > 100 ? 
+                    `${content.substring(0, 99)}...` : content
+                }
+            </div>
+            <div className='text-slate-500 text-sm font-thin pt-2'>
+                {`${Math.ceil(content.length/100)} min read`}
             </div>
         </div>
-        <div className='text-xl font-bold pt-2'>
-            {title}
-        </div>
-        <div className='text-md font-light text-slate-700'>
-            {
-                content.length > 100 ? 
-                `${content.substring(0, 99)}...` : content
-            }
-        </div>
-        <div className='text-slate-500 text-sm font-thin pt-2'>
-            {`${Math.ceil(content.length/100)} min read`}
-        </div>
-    </div>
+    </Link>
   )
 }
 

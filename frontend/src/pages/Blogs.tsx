@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
-import BlogCard, { Avatar } from '../components/BlogCard'
+import BlogCard from '../components/BlogCard'
 import Appbar from '../components/Appbar'
 import { useBlogs } from '../hooks'
+import { format } from 'date-fns'
+import { enIN } from 'date-fns/locale'
 
 const Blogs = () => {
-    const { loading, blogs, bulkblog } = useBlogs()
+    const { loading, blogs  } = useBlogs()
 
-    useEffect(() => {
-        async function fetchBlog() {
-            await bulkblog()
-        }
-        fetchBlog()
-    }, [])
+    // useEffect(() => {
+    //     async function fetchBlog() {
+    //         await bulkblog()
+    //     }
+    //     fetchBlog()
+    // }, [])
 
     if(loading) {
         return (
@@ -24,14 +25,15 @@ const Blogs = () => {
     <div>
         <Appbar />
         <div className='flex justify-center'>                                         
-            <div className='max-w-xl'>
+            <div className=''>
                 {blogs?.map(blog => 
                 <div key={blog.id}>
                     <BlogCard 
+                        id={blog.id}
                         authorName ={blog.author.name}
                         title = {blog.title}
                         content = {blog.content}
-                        publishedDate = {blog.createdAt}
+                        publishedDate = {format((blog.createdAt), "MMMM dd yyyy", { locale: enIN })}
                     />
                 </div>
                 )}

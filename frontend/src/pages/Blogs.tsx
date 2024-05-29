@@ -1,31 +1,41 @@
-import React from 'react'
-import BlogCard from '../components/BlogCard'
+import React, { useEffect } from 'react'
+import BlogCard, { Avatar } from '../components/BlogCard'
+import Appbar from '../components/Appbar'
+import { useBlogs } from '../hooks'
 
 const Blogs = () => {
+    const { loading, blogs, bulkblog } = useBlogs()
+
+    useEffect(() => {
+        async function fetchBlog() {
+            await bulkblog()
+        }
+        fetchBlog()
+    }, [])
+
+    if(loading) {
+        return (
+            <div>
+                loading...
+            </div>
+        )
+    }
   return (
-    <div className='flex justify-center'>
-        <div className='max-w-xl'>
-            <BlogCard 
-                authorName = {"Prince"}
-                title = {'How an ugly single page website makes $5000 a month without affiliate marketing'}
-                content = {`How an ugly single page website makes $5000 a month without affiliate marketing
-                    How an ugly single page website makes $5000 a month without affiliate marketing`}
-                publishedDate = {'2nd May 2023'}
-            />
-            <BlogCard 
-                authorName = {"Prince"}
-                title = {'How an ugly single page website makes $5000 a month without affiliate marketing'}
-                content = {`How an ugly single page website makes $5000 a month without affiliate marketing
-                    How an ugly single page website makes $5000 a month without affiliate marketing`}
-                publishedDate = {'2nd May 2023'}
-            />
-            <BlogCard 
-                authorName = {"Prince"}
-                title = {'How an ugly single page website makes $5000 a month without affiliate marketing'}
-                content = {`How an ugly single page website makes $5000 a month without affiliate marketing
-                    How an ugly single page website makes $5000 a month without affiliate marketing`}
-                publishedDate = {'2nd May 2023'}
-            />
+    <div>
+        <Appbar />
+        <div className='flex justify-center'>                                         
+            <div className='max-w-xl'>
+                {blogs?.map(blog => 
+                <div key={blog.id}>
+                    <BlogCard 
+                        authorName ={blog.author.name}
+                        title = {blog.title}
+                        content = {blog.content}
+                        publishedDate = {blog.createdAt}
+                    />
+                </div>
+                )}
+            </div>
         </div>
     </div>
   )

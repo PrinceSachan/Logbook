@@ -16,7 +16,7 @@ const BlogCard = ({
   return (
     <div className='p-4 border-b border-slate-200 pb-2'>
         <div className='flex'>
-            <Avatar name={authorName} /> 
+            <Avatar name={authorName} size='small' /> 
             <div className='font-normal pl-2 text-sm flex justify-center flex-col'>
                 {authorName}
             </div>
@@ -51,10 +51,10 @@ function Circle() {
     )
 }
 
-function Avatar({ name }: { name: string }){
+export function Avatar({ name, size = "small" }: { name: string, size?: "small" | "big" }){
     return (
-        <div className="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-            <span className="text-xs text-gray-600 dark:text-gray-300">{name[0]}</span>
+        <div className={`relative inline-flex items-center justify-center ${size === 'small' ? 'w-5 h-5' : 'w-8 h-8'} overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600`}>
+            <span className={`${size === 'small' ? 'text-xs' : 'text:md'} text-gray-600 dark:text-gray-300`}>{name[0]}</span>
         </div>
 
     )

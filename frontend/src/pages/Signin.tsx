@@ -1,5 +1,7 @@
 // imports
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { SigninInput } from '@princerudi/common'
 import axios from 'axios'
 
 // App imports
@@ -7,9 +9,7 @@ import Quote from '../components/Quote'
 import AuthHeader from '../components/AuthHeader'
 import { Button } from '../components/Button'
 import { InputBox } from '../components/InputBox'
-import { SigninInput } from '@princerudi/common'
 import { BACKEND_URL } from '../config'
-import { useNavigate } from 'react-router-dom'
 
 // signin component
 const Signin = () => {
@@ -22,9 +22,13 @@ const Signin = () => {
 // signup request
 async function signinRequest() {
   await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInputs)
-  .then(response => alert(`User have loggedin ${JSON.stringify(response.data)}`))
-  .catch(error => alert(`Error occured: ${JSON.stringify(error.response.data)}`))
-  navigate('/blogs')
+    .then(response => {
+        const token = response.data.token
+        alert(`User have loggedin ${JSON.stringify(token)}`)
+        localStorage.setItem('token', token)
+    })
+    .catch(error => alert(`Error occured: ${JSON.stringify(error.response.data)}`))
+    navigate('/blogs')
 }
 return (
 <div>

@@ -1,14 +1,15 @@
 // imports
 import { useState } from 'react'
+import axios from 'axios'
+import { SignupInput } from '@princerudi/common'
 
 // App imports
 import Quote from '../components/Quote'
 import AuthHeader from '../components/AuthHeader'
-import { SignupInput } from '@princerudi/common'
 import { InputBox } from '../components/InputBox'
 import { Button } from '../components/Button'
-import axios from 'axios'
 import { BACKEND_URL } from '../config'
+import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
     const [postInputs, setPostInputs] = useState<SignupInput>({
@@ -16,11 +17,13 @@ const Signup = () => {
         email: "",
         password: ""
     })
+    const navigate = useNavigate();
 
     async function signupRequest() {
         await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs)
         .then(response => alert(`User has created ${JSON.stringify(response.data)}`))
         .catch(error => alert(JSON.stringify(error.response.data)))
+        navigate('/blogs')
     }
 
   return (

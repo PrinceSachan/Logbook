@@ -1,27 +1,30 @@
 // imports
 import { useState } from 'react'
+import axios from 'axios'
 
 // App imports
 import Quote from '../components/Quote'
-import { SigninInput } from '@princerudi/common'
 import AuthHeader from '../components/AuthHeader'
-import { InputBox } from '../components/InputBox'
 import { Button } from '../components/Button'
-import axios from 'axios'
+import { InputBox } from '../components/InputBox'
+import { SigninInput } from '@princerudi/common'
 import { BACKEND_URL } from '../config'
+import { useNavigate } from 'react-router-dom'
 
 // signin component
 const Signin = () => {
-  const [postInputs, setPostInputs] = useState<SigninInput>({
-    email: "",
-    password: ""
-})
+    const [postInputs, setPostInputs] = useState<SigninInput>({
+        email: "",
+        password: ""
+    });
+    const navigate = useNavigate()
 
 // signup request
 async function signinRequest() {
   await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInputs)
   .then(response => alert(`User have loggedin ${JSON.stringify(response.data)}`))
   .catch(error => alert(`Error occured: ${JSON.stringify(error.response.data)}`))
+  navigate('/blogs')
 }
 return (
 <div>

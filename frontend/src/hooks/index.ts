@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../config"
 
-interface Blogstype {
+export interface Blogstype {
     "id": number;
     "title": string
     "content":string
@@ -12,13 +12,43 @@ interface Blogstype {
     "createdAt": string
 }
 
+
+// fetch all blogs if user logged in
+export const useBlogs = () => {
+    const [loading, setLoading]= useState(true)
+    const [blogs, setBlogs] = useState<Blogstype []>()
+    
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " +  localStorage.getItem("token")
+            }
+        })
+        .then(response => {
+            console.log(blogs)
+            setBlogs(response.data.bulkBlog)
+            setLoading(false)
+        })
+        .catch((err) => {
+            console.log('Error while fetching blogs:', err)
+            setLoading(false)
+        })
+    }, [])
+    
+    return {
+        loading,
+        blogs
+    }
+}
+
 // fetch specific blog by given id if user logged in
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading]= useState(true)
     const [blog, setBlog] = useState<Blogstype>()
 
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/blog/:${id}`, {
+        axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
             method: "GET",
             headers: {
                 Authorization: "Bearer " +  localStorage.getItem("token")
@@ -32,39 +62,10 @@ export const useBlog = ({ id }: { id: string }) => {
                 console.log('Error while fetching blogs:', err)
                 setLoading(false)
             })
-    }, [])
+    }, [id])
 
     return {
         loading,
         blog
-    }
-}
-
-// fetch all blogs if user logged in
-export const useBlogs = () => {
-    const [loading, setLoading]= useState(true)
-    const [blogs, setBlogs] = useState<Blogstype []>()
-
-    useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " +  localStorage.getItem("token")
-            }
-        })
-            .then(response => {
-                console.log(blogs)
-                setBlogs(response.data.bulkBlog)
-                setLoading(false)
-            })
-            .catch((err) => {
-                console.log('Error while fetching blogs:', err)
-                setLoading(false)
-            })
-    }, [])
-
-    return {
-        loading,
-        blogs
     }
 }

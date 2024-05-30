@@ -23,7 +23,7 @@ const Signup = () => {
         await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs)
         .then(response => {
             const token = response.data.token
-            alert(`User has created ${JSON.stringify(token)}`)
+            // alert(`User has created ${JSON.stringify(token)}`)
             localStorage.setItem('token', token)
         })
         .catch(error => alert(JSON.stringify(error.response.data)))

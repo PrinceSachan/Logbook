@@ -24,7 +24,7 @@ async function signinRequest() {
   await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInputs)
     .then(response => {
         const token = response.data.token
-        alert(`User have loggedin ${JSON.stringify(token)}`)
+        // alert(`User have loggedin ${JSON.stringify(token)}`)
         localStorage.setItem('token', token)
     })
     .catch(error => alert(`Error occured: ${JSON.stringify(error.response.data)}`))

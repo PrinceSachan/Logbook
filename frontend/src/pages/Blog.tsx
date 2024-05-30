@@ -17,7 +17,7 @@ const Blog = () => {
 
   return (
     <div>
-      <Fullblog />
+      <Fullblog blog={blog} />
     </div>
   )
 }

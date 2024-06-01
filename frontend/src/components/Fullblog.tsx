@@ -1,5 +1,4 @@
 import React from 'react'
-import Appbar from './Appbar'
 import { Blogstype } from '../hooks'
 import { format } from 'date-fns'
 import { enIN } from 'date-fns/locale'
@@ -8,7 +7,6 @@ import { Avatar } from './BlogCard'
 const Fullblog = ({ blog }: { blog: Blogstype}) => {
   return (
     <div>
-      <Appbar />
       <div className='flex justify-center'>
         <div className='grid grid-cols-12 px-10 w-full max-w-screen-xl pt-10'>
             <div className='col-span-8'>

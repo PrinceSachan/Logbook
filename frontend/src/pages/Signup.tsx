@@ -58,7 +58,7 @@ const Signup = () => {
                                     password: e.target.value
                                 })
                             }} />
-                            <Button label={"Sign up"} type='submit' onClick={signupRequest} />
+                            <Button children={"Sign up"} type='submit' onClick={signupRequest} className={'w-full hover:bg-gray-800 bg-gray-900 py-2.5 mt-4 mb-2 rounded-md'} />
                         </div>
                     </div>
                 </div>

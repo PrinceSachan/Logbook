@@ -31,16 +31,16 @@ const BlogCard = ({
                     {publishedDate}
                 </div>
             </div>
-            <div className='text-xl font-bold pt-2'>
+            <div className='text-xl font-bold pt-4'>
                 {title}
             </div>
-            <div className='text-md font-light text-slate-700'>
+            <div className='text-md font-light text-slate-700 pt-2'>
                 {
                     content.length > 100 ? 
                     `${content.substring(0, 99)}...` : content
                 }
             </div>
-            <div className='text-slate-500 text-sm font-thin pt-2'>
+            <div className='text-slate-500 text-sm font-thin pt-6 pb-2'>
                 {`${Math.ceil(content.length/100)} min read`}
             </div>
         </div>
@@ -58,8 +58,8 @@ function Circle() {
 
 export function Avatar({ name, size = "small" }: { name: string, size?: "small" | "big" }){
     return (
-        <div className={`relative inline-flex items-center justify-center ${size === 'small' ? 'w-5 h-5' : 'w-8 h-8'} overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600`}>
-            <span className={`${size === 'small' ? 'text-xs' : 'text:md'} text-gray-600 dark:text-gray-300`}>{name[0]}</span>
+        <div className={`relative inline-flex items-center justify-center ${size === 'small' ? 'w-6 h-6' : 'w-9 h-9'} overflow-hidden bg-gray-100 rounded-full bg-slate-200`}>
+            <span className={`${size === 'small' ? 'text-xs' : 'text:md'} text-slate-900 font-semibold`}>{name[0].toUpperCase()}</span>
         </div>
 
     )

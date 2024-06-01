@@ -1,18 +1,10 @@
 import BlogCard from '../components/BlogCard'
-import Appbar from '../components/Appbar'
 import { useBlogs } from '../hooks'
 import { format } from 'date-fns'
 import { enIN } from 'date-fns/locale'
 
 const Blogs = () => {
     const { loading, blogs  } = useBlogs()
-
-    // useEffect(() => {
-    //     async function fetchBlog() {
-    //         await bulkblog()
-    //     }
-    //     fetchBlog()
-    // }, [])
 
     if(loading) {
         return (
@@ -23,9 +15,8 @@ const Blogs = () => {
     }
   return (
     <div>
-        <Appbar />
         <div className='flex justify-center'>                                         
-            <div className=''>
+            <div>
                 {blogs?.map(blog => 
                 <div key={blog.id}>
                     <BlogCard 

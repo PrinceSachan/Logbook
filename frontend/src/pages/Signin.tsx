@@ -52,7 +52,7 @@ return (
                                 password: e.target.value
                             })
                         }} />
-                        <Button label={"Sign in"} type='submit' onClick={signinRequest} />
+                        <Button children={"Sign in"} type='submit' onClick={signinRequest} className={'w-full hover:bg-gray-800 bg-gray-900 py-2.5 mt-4 mb-2 rounded-md'} />
                     </div>
                 </div>
             </div>

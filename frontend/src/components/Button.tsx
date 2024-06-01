@@ -1,20 +1,21 @@
 import { MouseEvent } from "react";
-
+import { cn } from '../utils/cn'
 interface ButtonType {
-    label: string;
+    children: string;
     type? : "submit" | "reset" | "button" ;
-    onClick: (e : MouseEvent<HTMLButtonElement>) => void
+    onClick?: (e : MouseEvent<HTMLButtonElement>) => void;
+    className: string
 }
 
 // button component
-export const Button = ({label, onClick, type}: ButtonType) => {
+export const Button = ({children, onClick, type, className}: ButtonType) => {
     return (
         <div>
             <button 
                 onClick={onClick} 
-                className="w-full text-white hover:bg-gray-800 bg-gray-900 focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mt-4 mb-2"
+                className={cn(`text-white focus:outline-none font-medium text-sm px-5 text-center`, className)}
                 type={type}
-            >{label}</button>
+            >{children}</button>
         </div>
     )
 }

@@ -23,7 +23,7 @@ const Blogs = () => {
                         id={blog.id}
                         authorName ={blog.author.name}
                         title = {blog.title}
-                        content = {blog.content}
+                        content= {blog.content}
                         publishedDate = {format((blog.createdAt), "MMMM dd yyyy", { locale: enIN })}
                     />
                 </div>

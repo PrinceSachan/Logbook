@@ -34,12 +34,13 @@ const BlogCard = ({
             <div className='text-xl font-bold pt-4'>
                 {title}
             </div>
-            <div className='text-md font-light text-slate-700 pt-2'>
-                {
-                    content.length > 100 ? 
-                    `${content.substring(0, 99)}...` : content
-                }
-            </div>
+            <div 
+                className='text-md font-light text-slate-700 pt-2'
+                dangerouslySetInnerHTML={{__html: 
+                    content.length > 150 ? 
+                    `${content.substring(0, 139)}...` : content
+                }}
+            />
             <div className='text-slate-500 text-sm font-thin pt-6 pb-2'>
                 {`${Math.ceil(content.length/100)} min read`}
             </div>

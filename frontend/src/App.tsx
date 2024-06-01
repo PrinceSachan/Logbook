@@ -6,8 +6,8 @@ import Signup from './pages/Signup'
 import Signin from './pages/Signin'
 import Blog from './pages/Blog'
 import Blogs from './pages/Blogs'
-import WriteBlog from './pages/WriteBlog'
 import Appbar from './components/Appbar'
+import PublishBlog from './pages/PublishBlog'
 
 function App() {
 
@@ -20,7 +20,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/blog/:id" element={<Blog />} />
           <Route path='/blogs' element={<Blogs />} />
-          <Route path='/writeBlog' element={<WriteBlog/>} />
+          <Route path='/writeBlog' element={<PublishBlog />} />
         </Routes>
       </BrowserRouter>
     </>

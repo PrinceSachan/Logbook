@@ -16,9 +16,7 @@ const Fullblog = ({ blog }: { blog: Blogstype}) => {
               <div className='font-normal text-slate-500 text-md pt-2'>
                 Posted on {format((blog.createdAt), "MMMM dd, yyyy", { locale: enIN })}
               </div>
-              <div className='pt-4'>
-                {blog.content}
-              </div>
+              <div className='pt-4' dangerouslySetInnerHTML={{ __html: blog.content }} />
             </div>
             <div className='col-span-4'>
               <div className='text-slate-600 text-lg'>

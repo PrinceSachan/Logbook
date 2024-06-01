@@ -1,2 +1,0 @@
-//init
-window.global ||= window;

@@ -58,7 +58,11 @@ userRoutes.post('/signup', async(c) => {
   
       // signup with jwt
       const token = await sign({ id: createUser.id }, c.env.JWT_SECRET)
-      return c.json({ token: token });
+      return c.json({ 
+        token: token,
+        id: createUser.id, 
+        name: createUser.name
+      });
     }
     catch(err) {
       c.status(403);
@@ -98,7 +102,11 @@ userRoutes.post('/signin', async(c) => {
       
       // signin with jwt
       const token = await sign( {id: isUser.id }, c.env.JWT_SECRET )
-      return c.json({ token: token })
+      return c.json({
+        token: token,
+        id: isUser.id,
+        name: isUser.name
+      })
     }
     catch (err) {
       c.status(403);

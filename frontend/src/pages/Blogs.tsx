@@ -1,5 +1,5 @@
 import BlogCard from '../components/BlogCard'
-import { useBlogs } from '../hooks'
+import { useBlogs } from '../hooks/blog'
 import { format } from 'date-fns'
 import { enIN } from 'date-fns/locale'
 

@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../config"
-import { tr } from "date-fns/locale";
 
 export interface Blogstype {
     "id": number;
@@ -13,6 +12,7 @@ export interface Blogstype {
     "createdAt": string
 }
 
+// write blog return type
 export interface BlogReturnType {
     writeBlog: (title: string, content: string) => Promise<number>
 }
@@ -31,7 +31,6 @@ export const useBlogs = () => {
             }
         })
         .then(response => {
-            console.log(blogs)
             setBlogs(response.data.bulkBlog)
             setLoading(false)
         })

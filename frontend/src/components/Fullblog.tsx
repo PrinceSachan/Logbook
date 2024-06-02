@@ -1,5 +1,5 @@
 import React from 'react'
-import { Blogstype } from '../hooks'
+import { Blogstype } from '../hooks/blog'
 import { format } from 'date-fns'
 import { enIN } from 'date-fns/locale'
 import { Avatar } from './BlogCard'

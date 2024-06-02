@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // app imports
 import { InputBox } from '../components/InputBox';
 import { Button } from '../components/Button';
-import { useWriteBlog } from '../hooks';
+import { useWriteBlog } from '../hooks/blog';
 
 const PublishBlog = () => {
   const [title, setTitle] = useState('')

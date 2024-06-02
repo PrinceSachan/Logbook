@@ -6,26 +6,28 @@ import Quote from '../components/Quote'
 import AuthHeader from '../components/AuthHeader'
 import { Button } from '../components/Button'
 import { InputBox } from '../components/InputBox'
-import { useAuth, useSignin } from '../hooks/auth'
+// import { useSignin } from '../hooks/auth'
+import { useAuthProvider } from '../context/AuthContext'
 
 // signin component
 const Signin = () => {
     const { 
-        signinRequest, 
         signinInput, 
         setSigninInput,
-        loading
-    } = useSignin()
-    const { isAuthenticated } = useAuth()
+        signinRequest,
+        loading,
+        setIsAuthenticated
+    } = useAuthProvider()
     const navigate = useNavigate()
 
     // signin request
     const clickHandler = async() => {
-        console.log(isAuthenticated)
         try{
             await signinRequest()
-            navigate(`/blogs`)
-            console.log(isAuthenticated)
+            if(localStorage.getItem('token')){
+                setIsAuthenticated(true)
+                navigate(`/blogs`)
+            }
         }
         catch(err) {
             console.log(err)

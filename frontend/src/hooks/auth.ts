@@ -1,40 +1,47 @@
+//imports
 import { SigninInput, SignupInput } from "@princerudi/common";
 import axios from "axios";
 import { Dispatch, SetStateAction, useState } from "react"
+
+// app imports
 import { BACKEND_URL } from "../config";
 
 export type AuthReturnType = {
+    loading: boolean;
     isAuthenticated: boolean;
-}
-
-export type SignupReturns = {
-    loading: boolean;
     signUpInput: SignupInput;
-    setSignUpInput: Dispatch<SetStateAction<SignupInput>>
-    signupRequest: () => Promise<void> 
-}
-
-export type SigninReturns = {
-    loading: boolean;
     signinInput: SigninInput;
+    setIsAuthenticated: Dispatch<SetStateAction<boolean>>
+    setSignUpInput: Dispatch<SetStateAction<SignupInput>>
     setSigninInput: Dispatch<SetStateAction<SigninInput>>
+    signupRequest: () => Promise<void> 
     signinRequest: () => Promise<void> 
 }
 
 export const useAuth = (): AuthReturnType  => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    // check if user logged in or not
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        const token = localStorage.getItem('token')
+        return token !== null
+    })
 
-    return { isAuthenticated }
-}
-
-export const useSignup = (): SignupReturns => {
+    // signup request payload
     const [signUpInput, setSignUpInput] = useState<SignupInput>({
         email: '',
         password: '',
         name: '',
     })
+
+    // signin request payload
+    const [signinInput, setSigninInput] = useState<SigninInput>({
+        email: '',
+        password: '',
+    })
+
+    //for request loading state
     const [loading, setLoading] = useState<boolean>(false)
 
+    //signup request api
     const signupRequest = async() => {
         setLoading(true)
         try{
@@ -54,21 +61,7 @@ export const useSignup = (): SignupReturns => {
         }
     }
 
-    return {
-        signupRequest,
-        loading,
-        signUpInput,
-        setSignUpInput
-    }
-}
-
-export const useSignin = (): SigninReturns => {
-    const [signinInput, setSigninInput] = useState<SigninInput>({
-        email: '',
-        password: '',
-    })
-    const [loading, setLoading] = useState<boolean>(false)
-
+    //signin request api
     const signinRequest = async() => {
         setLoading(true)
         try{
@@ -88,10 +81,16 @@ export const useSignin = (): SigninReturns => {
         }
     }
 
+    //return all the states and functions.
     return {
         loading,
+        isAuthenticated,
+        setIsAuthenticated,
         signinInput,
+        setSignUpInput,
+        signUpInput,
         setSigninInput,
         signinRequest,
+        signupRequest
     }
 }

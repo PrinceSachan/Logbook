@@ -1,30 +1,29 @@
 // imports
-import { useState } from 'react'
-import { SignupInput } from '@princerudi/common'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-
 // App imports
 import Quote from '../components/Quote'
 import AuthHeader from '../components/AuthHeader'
 import { InputBox } from '../components/InputBox'
 import { Button } from '../components/Button'
-import { BACKEND_URL } from '../config'
-import { useSignup } from '../hooks/auth'
+import { useAuthProvider } from '../context/AuthContext'
 
 const Signup = () => {
    const { 
         signupRequest, 
         signUpInput, 
         setSignUpInput,
-        loading
-    } = useSignup()
+        loading,
+        setIsAuthenticated
+    } = useAuthProvider()
     const navigate = useNavigate();
 
     const clickHandler = async() => {
         try{
             await signupRequest()
-            navigate(`/blogs`)
+            if(localStorage.getItem('token')){
+                setIsAuthenticated(true)
+                navigate(`/blogs`)
+            }
         }
         catch(err) {
             console.log(err)

@@ -1,11 +1,11 @@
+import { useUserBlog } from '../hooks/userBlog'
 import BlogCard from '../components/BlogCard'
-import Header from '../components/Header'
-import { useBlogs } from '../hooks/blog'
 import { format } from 'date-fns'
 import { enIN } from 'date-fns/locale'
+import Header from '../components/Header'
 
-const Blogs = () => {
-    const { loading, blogs  } = useBlogs()
+const UserBlogs = () => {
+    const { loading, blogs  } = useUserBlog()
 
     if(loading) {
         return (
@@ -38,4 +38,4 @@ const Blogs = () => {
   )
 }
 
-export default Blogs
+export default UserBlogs

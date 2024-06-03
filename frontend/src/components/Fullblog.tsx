@@ -1,8 +1,10 @@
-import React from 'react'
-import { Blogstype } from '../hooks/blog'
-import { format } from 'date-fns'
+//imports
 import { enIN } from 'date-fns/locale'
+import { format } from 'date-fns'
+
+// app imports
 import { Avatar } from './BlogCard'
+import { Blogstype } from '../hooks/blog'
 
 const Fullblog = ({ blog }: { blog: Blogstype}) => {
   return (

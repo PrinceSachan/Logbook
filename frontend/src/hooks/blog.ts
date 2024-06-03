@@ -17,7 +17,6 @@ export interface BlogReturnType {
     writeBlog: (title: string, content: string) => Promise<number>
 }
 
-
 // fetch all blogs if user logged in
 export const useBlogs = () => {
     const [loading, setLoading]= useState(true)
@@ -46,7 +45,7 @@ export const useBlogs = () => {
     }
 }
 
-// fetch specific blog by given id if user logged in
+// fetch single blog by given id if user logged in
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading]= useState(true)
     const [blog, setBlog] = useState<Blogstype>()

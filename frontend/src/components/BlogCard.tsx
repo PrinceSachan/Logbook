@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import Header from './Header';
 
 interface BlogCardProps {
     id: number;
@@ -17,35 +18,40 @@ const BlogCard = ({
     publishedDate
 }: BlogCardProps) => {
   return (
-    <Link to={`/blog/${id}`}>
-        <div className='p-4 border-b border-slate-200 pb-2 w-screen max-w-screen-md cursor-pointer'>
-            <div className='flex'>
-                <Avatar name={authorName} size='small' /> 
-                <div className='font-normal pl-2 text-sm flex justify-center flex-col'>
-                    {authorName}
+    <div>
+
+        <div>
+            <Link to={`/blog/${id}`}>
+                <div className='p-4 border-b border-slate-200 pb-2 w-screen max-w-screen-md cursor-pointer'>
+                    <div className='flex'>
+                        <Avatar name={authorName} size='small' /> 
+                        <div className='font-normal pl-2 text-md flex justify-center flex-col'>
+                            {authorName}
+                        </div>
+                        <div className='flex justify-center flex-col pl-2 flex justify-center flex-col'>
+                            <Circle />
+                        </div>
+                        <div className='font-extralight pl-2 text-slate-500 text-sm flex justify-center flex-col'>
+                            {publishedDate}
+                        </div>
+                    </div>
+                    <div className='text-xl font-bold pt-4'>
+                        {title}
+                    </div>
+                    <div 
+                        className='text-md font-light text-slate-700 pt-2'
+                        dangerouslySetInnerHTML={{__html: 
+                            content.length > 150 ? 
+                            `${content.substring(0, 139)}...` : content
+                        }}
+                    />
+                    <div className='text-slate-500 text-md font-thin pt-6 pb-2'>
+                        {`${Math.ceil(content.length/100)} min read`}
+                    </div>
                 </div>
-                <div className='flex justify-center flex-col pl-2 flex justify-center flex-col'>
-                    <Circle />
-                </div>
-                <div className='font-extralight pl-2 text-slate-500 text-sm flex justify-center flex-col'>
-                    {publishedDate}
-                </div>
-            </div>
-            <div className='text-xl font-bold pt-4'>
-                {title}
-            </div>
-            <div 
-                className='text-md font-light text-slate-700 pt-2'
-                dangerouslySetInnerHTML={{__html: 
-                    content.length > 150 ? 
-                    `${content.substring(0, 139)}...` : content
-                }}
-            />
-            <div className='text-slate-500 text-sm font-thin pt-6 pb-2'>
-                {`${Math.ceil(content.length/100)} min read`}
-            </div>
+            </Link>
         </div>
-    </Link>
+    </div>
   )
 }
 

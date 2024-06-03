@@ -1,4 +1,4 @@
-import { Hono, MiddlewareHandler } from "hono";
+import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from "hono/jwt";
@@ -153,7 +153,7 @@ blogRouter.get('/bulk', async(c) => {
     catch(err) {
         c.status(403)
         return c.json({
-            message: 'Error while Fetching blogs.'
+            message: `Error while fetching blogs: ${err}`
         })
     }
 })

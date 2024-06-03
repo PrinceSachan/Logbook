@@ -11,6 +11,7 @@ import PublishBlog from './pages/PublishBlog'
 import { AuthContextProvider } from './context/AuthContext'
 import Landing from './pages/Landing'
 import ProtectedRoute from './routes/ProtectedRoute'
+import UserBlogs from './pages/UserBlogs'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/' element={<ProtectedRoute />}>
               <Route path="/blog/:id" element={<Blog />} />
               <Route path='/blogs' element={<Blogs />} />
+              <Route path='/userBlogs' element={<UserBlogs />} />
               <Route path='/writeBlog' element={<PublishBlog />} />
             </Route>
           </Routes>

@@ -3,6 +3,7 @@ import BlogCard from '../components/BlogCard'
 import { format } from 'date-fns'
 import { enIN } from 'date-fns/locale'
 import Header from '../components/Header'
+import BlogSkeleton from '../components/BlogSkeleton'
 
 const UserBlogs = () => {
     const { loading, blogs  } = useUserBlog()
@@ -10,7 +11,16 @@ const UserBlogs = () => {
     if(loading) {
         return (
             <div>
-                loading...
+                <div className='flex justify-center'>
+                    <div >
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                    </div>
+                </div>
             </div>
         )
     }

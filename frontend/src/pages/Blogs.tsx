@@ -1,4 +1,6 @@
+import Appbar from '../components/Appbar'
 import BlogCard from '../components/BlogCard'
+import BlogSkeleton from '../components/BlogSkeleton'
 import Header from '../components/Header'
 import { useBlogs } from '../hooks/blog'
 import { format } from 'date-fns'
@@ -10,7 +12,14 @@ const Blogs = () => {
     if(loading) {
         return (
             <div>
-                loading...
+                <div className='flex justify-center'>
+                    <div >
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                        <BlogSkeleton />
+                    </div>
+                </div>
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import { useBlog } from '../hooks/blog';
 import { useParams } from 'react-router-dom';
 import Fullblog from '../components/Fullblog';
+import Spinner from '../components/Spinner';
 
 const Blog = () => {
   const { id } = useParams()
@@ -9,8 +10,10 @@ const Blog = () => {
   });
 
   if(loading) {
-    return <div>
-      Loading...
+    return <div className='h-screen flex flex-col justify-center'>
+      <div className='flex justify-center'>
+        <Spinner />
+      </div>
     </div>
   }
 

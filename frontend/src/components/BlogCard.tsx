@@ -1,6 +1,5 @@
-import React from 'react'
+
 import { Link } from 'react-router-dom';
-import Header from './Header';
 
 interface BlogCardProps {
     id: number;
@@ -66,7 +65,7 @@ export function Circle() {
 export function Avatar({ name, size = "small" }: { name: string, size?: "small" | "big" }){
     return (
         <div className={`relative inline-flex items-center justify-center ${size === 'small' ? 'w-6 h-6' : 'w-9 h-9'} overflow-hidden bg-gray-100 rounded-full bg-slate-200`}>
-            <span className={`${size === 'small' ? 'text-xs' : 'text:md'} text-slate-900 font-semibold`}>{name[0].toUpperCase()}</span>
+            <span className={`${size === 'small' ? 'text-xs' : 'text:md'} text-slate-900 font-semibold`}>{name[0]}</span>
         </div>
 
     )

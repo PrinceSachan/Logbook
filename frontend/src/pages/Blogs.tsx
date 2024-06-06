@@ -1,7 +1,6 @@
-import Appbar from '../components/Appbar'
 import BlogCard from '../components/BlogCard'
 import BlogSkeleton from '../components/BlogSkeleton'
-import Header from '../components/Header'
+// import Header from '../components/Header'
 import { useBlogs } from '../hooks/blog'
 import { format } from 'date-fns'
 import { enIN } from 'date-fns/locale'
@@ -25,10 +24,10 @@ const Blogs = () => {
     }
   return (
     <div>
-        <div className='flex justify-center'>
-            <Header />
-        </div>
-        <div className='flex justify-center'>                                         
+        <div className='fixed bottom-6'>
+            <button>Click me</button>
+        </div>                                       
+        <div className='flex justify-center'>  
             <div>
                 {blogs?.map(blog => 
                     <div key={blog.id}>
@@ -43,6 +42,7 @@ const Blogs = () => {
                 )}
             </div>
         </div>
+        
     </div>
   )
 }

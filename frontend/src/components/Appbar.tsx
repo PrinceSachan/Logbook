@@ -4,27 +4,48 @@ import { Button } from './Button'
 import { useAuthProvider } from '../context/AuthContext'
 
 const Appbar = () => {
-  const { isAuthenticated }  = useAuthProvider()
-  const userName = localStorage.getItem('Username')
+  const { isAuthenticated, setIsAuthenticated, signout, name, setName }  = useAuthProvider()
   const navigate = useNavigate()
 
+  const clickHandler = async() => {
+    try{
+      await signout()
+      if(!localStorage.getItem('token')){
+        setIsAuthenticated(false)
+        setName('')
+        navigate('/')
+      }
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
+
   return (
-    <div className='border-b flex justify-between px-10 py-4'>
-      <Link to={'/blogs'} className='flex flex-col justify-center font-semibold cursor-pointer'>
+    <div className='border-b flex justify-between px-10 py-3'>
+      <Link to={'/blogs'} className='flex flex-col justify-center font-semibold text-md cursor-pointer'>
         Logbook
       </Link>
       { isAuthenticated ? 
         <div className='flex'>
+          <div className='flex flex-col justify-center mr-4'>
+            <Avatar size='big' name={name} />
+          </div>
           <div className='flex flex-col justify-center'>
             <Button 
-              children='Write Blog' 
+              children='Logout' 
               type='button' 
-              onClick={() => navigate('/writeBlog')}
-              className={'rounded-full bg-green-700 hover:bg-green-800 py-2 mr-4'} 
+              onClick={clickHandler}
+              className={'hover:bg-gray-800 bg-gray-900 py-2.5 rounded-md'} 
             />
           </div>
           <div>
-            <Avatar size='big' name={userName} />
+            <Button 
+              children='Write blog' 
+              type='button' 
+              onClick={() => navigate('/writeBlogs')}
+              className={'hover:bg-gray-800 bg-gray-900 py-2.5 rounded-md'} 
+            />
           </div>
         </div>
       :         

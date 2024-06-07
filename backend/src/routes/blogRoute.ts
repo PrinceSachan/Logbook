@@ -132,7 +132,8 @@ blogRouter.get('/bulk', async(c) => {
     }).$extends(withAccelerate())
     try {
         const bulkBlog = await prisma.post.findMany({
-            // take: 5,
+            skip: parseInt(c.req.query('skip') as string),
+            take: parseInt(c.req.query('take') as string),
             select: {
                 id: true,
                 title: true,
@@ -145,9 +146,12 @@ blogRouter.get('/bulk', async(c) => {
                 createdAt: true
             }
         })
+        
+        const totalPost = await prisma.post.count()
 
         return c.json({
-            bulkBlog
+            bulkBlog,
+            totalPost
         })
     }
     catch(err) {

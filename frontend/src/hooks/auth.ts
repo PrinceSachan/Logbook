@@ -8,11 +8,9 @@ import { BACKEND_URL } from "../config";
 
 export type AuthReturnType = {
     loading: boolean;
-    name: string;
     isAuthenticated: boolean;
     signUpInput: SignupInput;
     signinInput: SigninInput;
-    setName: Dispatch<SetStateAction<string>>;
     setIsAuthenticated: Dispatch<SetStateAction<boolean>>
     setSignUpInput: Dispatch<SetStateAction<SignupInput>>
     setSigninInput: Dispatch<SetStateAction<SigninInput>>
@@ -44,8 +42,6 @@ export const useAuth = (): AuthReturnType  => {
     //for request loading state
     const [loading, setLoading] = useState<boolean>(false)
 
-    const [name, setName] = useState('')
-
     //signup request api
     const signupRequest = async() => {
         setLoading(true)
@@ -53,7 +49,7 @@ export const useAuth = (): AuthReturnType  => {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, signUpInput)
             const token = response.data.token
             localStorage.setItem('token', token)
-            setName(response.data.name)
+            localStorage.setItem('name', response.data.name)
         }
         catch(err) {
             console.log('Error while signinup: ', err)
@@ -70,7 +66,7 @@ export const useAuth = (): AuthReturnType  => {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, signinInput)
             const token = response.data.token
             localStorage.setItem('token', token)
-            setName(response.data.name)
+            localStorage.setItem('name', response.data.name)
         }
         catch(err) {
             console.log('Error while signinup: ', err)
@@ -96,8 +92,6 @@ export const useAuth = (): AuthReturnType  => {
     //return all the states and functions.
     return {
         loading,
-        name,
-        setName,
         isAuthenticated,
         setIsAuthenticated,
         signinInput,

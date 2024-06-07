@@ -18,12 +18,13 @@ export interface BlogReturnType {
 }
 
 // fetch all blogs if user logged in
-export const useBlogs = () => {
+export const useBlogs = ({skip, take}: {skip: number, take:number}) => {
     const [loading, setLoading]= useState(true)
     const [blogs, setBlogs] = useState<Blogstype []>()
+    const [totalPost, setTotalPost] = useState<number>()
     
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
+        axios.get(`${BACKEND_URL}/api/v1/blog/bulk?skip=${skip}&take=${take}`, {
             method: "GET",
             headers: {
                 Authorization: "Bearer " +  localStorage.getItem("token")
@@ -31,17 +32,19 @@ export const useBlogs = () => {
         })
         .then(response => {
             setBlogs(response.data.bulkBlog)
+            setTotalPost(response.data.totalPost)
             setLoading(false)
         })
         .catch((err) => {
             console.log('Error while fetching blogs:', err)
             setLoading(false)
         })
-    }, [])
+    }, [skip, take])
     
     return {
         loading,
-        blogs
+        blogs,
+        totalPost
     }
 }
 
